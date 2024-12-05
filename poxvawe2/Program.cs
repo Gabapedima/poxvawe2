@@ -37,4 +37,43 @@ class Program
             }
         }
     }
+    static void AddPassword()
+    {
+        Console.Write("Enter account name: ");
+        string account = Console.ReadLine();
+
+        Console.Write("Enter password: ");
+        string password = Console.ReadLine();
+
+        string encryptedPassword = EncryptPassword(password);
+        passwordVault[account] = encryptedPassword;
+
+        Console.WriteLine($"Password for '{account}' added.");
+    }
+
+    static void ViewPasswords()
+    {
+        if (passwordVault.Count == 0)
+        {
+            Console.WriteLine("No passwords saved.");
+            return;
+        }
+
+        foreach (var entry in passwordVault)
+        {
+            string decryptedPassword = DecryptPassword(entry.Value);
+            Console.WriteLine($"Account: {entry.Key}, Password: {decryptedPassword}");
+        }
+    }
+
+    static void DeletePassword()
+    {
+        Console.Write("Enter account name to delete: ");
+        string account = Console.ReadLine();
+
+        if (passwordVault.Remove(account))
+            Console.WriteLine($"Password for '{account}' deleted.");
+        else
+            Console.WriteLine("Account not found.");
+    }
 }
