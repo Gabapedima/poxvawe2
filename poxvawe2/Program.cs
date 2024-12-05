@@ -65,4 +65,30 @@ class Program
             Console.WriteLine($"Account: {entry.Key}, Password: {decryptedPassword}");
         }
     }
+
+    static void DeletePassword()
+    {
+        Console.Write("Enter account name to delete: ");
+        string account = Console.ReadLine();
+
+        if (passwordVault.Remove(account))
+            Console.WriteLine($"Password for '{account}' deleted.");
+        else
+            Console.WriteLine("Account not found.");
+    }
+
+    static string EncryptPassword(string password)
+    {
+        byte[] data = Encoding.UTF8.GetBytes(password);
+        using (Aes aes = Aes.Create())
+        {
+            aes.Key = Encoding.UTF8.GetBytes("a16byteslongkey!"); // Example key
+            aes.IV = Encoding.UTF8.GetBytes("a16byteslongiv!!");  // Example IV
+            using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
+            {
+                byte[] encrypted = encryptor.TransformFinalBlock(data, 0, data.Length);
+                return Convert.ToBase64String(encrypted);
+            }
+        }
+    }
 }
