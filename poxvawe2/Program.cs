@@ -50,8 +50,6 @@ class Program
 
         Console.WriteLine($"Password for '{account}' added.");
     }
-<<<<<<< HEAD
-=======
 
     static void ViewPasswords()
     {
@@ -67,5 +65,4 @@ class Program
             Console.WriteLine($"Account: {entry.Key}, Password: {decryptedPassword}");
         }
     }
->>>>>>> view
 }
